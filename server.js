@@ -6,6 +6,7 @@ const fs = require('fs')
 const livereload = require('livereload')
 const connectLiveReload = require("connect-livereload")
 
+//Setup for server refresh(dev)
 const liveReloadServer = livereload.createServer()
 liveReloadServer.server.once('connection', (err) => {
     setTimeout(() => {
@@ -13,6 +14,7 @@ liveReloadServer.server.once('connection', (err) => {
     }, 10)
 })
 
+//In case of issues with json file, using defaultDb to fill json with example(dev)
 const defaultDb = [
         {
             "title": "Test Title",
@@ -35,6 +37,7 @@ app.use(express.static('public'))
 
 //POST request to update webpage
 app.post('/api/notes', (req, res) => {
+
     // Log that a POST request was received
     console.info(`${req.method} request received to add a note`)
 
@@ -54,9 +57,10 @@ app.post('/api/notes', (req, res) => {
 
         //Obatin existing notes.
         fs.readFile('./db/db.json', 'utf8', (err) => {
+
             if (err) console.error(err)
+            
             else {
-                //Data refers to data in db.json, dataBase represents db.json.
                 dataBase.push(newNote)
                 const notesString = JSON.stringify(dataBase, null, 4)
 
@@ -83,6 +87,7 @@ app.post('/api/notes', (req, res) => {
             status: 'success',
             body: newNote
         }
+
         //Return adjusted database as response in json format.
         console.log(response)
         res.json(dataBase)   
@@ -104,6 +109,7 @@ app.delete('/api/notes/:id', (req, res) => {
             fs.writeFile(`./db/db.json`, JSON.stringify(defaultDb), (err) => console.error(err))
         }
     }
+    
     //Write string to a JSON file for usage in pulling data from get requests.
     fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => {
         if (err) {
@@ -118,6 +124,7 @@ app.delete('/api/notes/:id', (req, res) => {
         }
 
     })
+
     //Return adjusted database as response in json format.
     res.json(dataBase)
     
