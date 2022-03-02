@@ -56,7 +56,7 @@ app.post('/api/notes', (req, res) => {
         fs.readFile('./db/db.json', 'utf8', (err) => {
             if (err) console.error(err)
             else {
-                //Data refers to data in db.json, parsedNotes is an array-like object.
+                //Data refers to data in db.json, dataBase represents db.json.
                 dataBase.push(newNote)
                 const notesString = JSON.stringify(dataBase, null, 4)
 
@@ -83,6 +83,7 @@ app.post('/api/notes', (req, res) => {
             status: 'success',
             body: newNote
         }
+        //Return adjusted database as response in json format.
         console.log(response)
         res.json(dataBase)   
     }
