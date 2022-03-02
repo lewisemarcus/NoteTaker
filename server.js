@@ -77,7 +77,7 @@ app.post('/api/notes', (req, res) => {
                     `)
                         console.error(err)
                     }
-                    else console.log(`Object for ${newNote.title} has been written to JSON file`)
+                    else console.log(`Note ${newNote.title} has been written to JSON file`)
                 })
             }
         })
@@ -94,13 +94,7 @@ app.post('/api/notes', (req, res) => {
     else {
         res.status(500).json('Error in posting note')
     }
-})
-app.get('/api/notes', (req, res) => {
-    res.json(dataBase);
-})
-
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/notes.html'))
+    
 })
 
 //Deletes each note.
@@ -130,7 +124,17 @@ app.delete('/api/notes/:id', (req, res) => {
     })
     //Return adjusted database as response in json format.
     res.json(dataBase)
+    
 })
+
+app.get('/api/notes', (req, res) => {
+    res.json(dataBase);
+})
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/notes.html'))
+})
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
