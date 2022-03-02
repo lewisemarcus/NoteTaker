@@ -5,14 +5,21 @@ const crypto = require("crypto")
 const fs = require('fs')
 const livereload = require('livereload')
 const connectLiveReload = require("connect-livereload")
-const { data } = require('uikit')
 
 const liveReloadServer = livereload.createServer()
 liveReloadServer.server.once('connection', (err) => {
     setTimeout(() => {
         liveReloadServer.refresh('/notes')
-    }, 1)
+    }, 10)
 })
+
+const defaultDb = [
+        {
+            "title": "Test Title",
+            "text": "Test text",
+            "id": "test id"
+        }
+    ]
 
 const PORT = process.env.port || 3001
 
@@ -68,7 +75,7 @@ app.post('/api/notes', (req, res) => {
                         }
                     ]
                     `)
-                    console.error(err)
+                        console.error(err)
                     }
                     else console.log(`Object for ${newNote.title} has been written to JSON file`)
                 })
@@ -100,9 +107,28 @@ app.get('/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
     let id = req.params.id
     console.log(`this is clicked note's id: ${id}`)
-    for(let each of dataBase) {
-        if(each.id == id) dataBase.splice(dataBase.indexOf(each))
+    for (let each of dataBase) {
+        if (each.id == id) dataBase.splice(dataBase.indexOf(each), 1)
+        if (each.id == id && dataBase.indexOf(each) == 0) {
+            dataBase.splice(dataBase.indexOf(each))
+            fs.writeFile(`./db/db.json`, JSON.stringify(defaultDb), (err) => console.error(err))
+        }
     }
+    //Write string to a JSON file for usage in pulling data from get requests.
+    fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => {
+        if (err) {
+            fs.writeFile(`./db/db.json`, `[
+            {
+                "title":"Test Title",
+                "text":"Test text",
+                "id":"test id"
+            }
+        ]
+        `, (err) => console.error(err))
+        }
+
+    })
+    //Return adjusted database as response in json format.
     res.json(dataBase)
 })
 
@@ -113,4 +139,3 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
-

@@ -181,3 +181,13 @@ if (window.location.pathname === '/notes') {
 }
 
 getAndRenderNotes();
+
+//Fix for livereload not terminating connection fast enough on Firefox. 
+//https://github.com/livereload/livereload-js/issues/40
+window.addEventListener('beforeunload', function(window){
+  return function(){
+      if (window.LiveReload){
+          window.LiveReload.connector.socket.close();
+      }
+  }
+}(window))
