@@ -14,7 +14,7 @@ liveReloadServer.server.once('connection', (err) => {
     }, 10)
 })
 
-//In case of issues with json file, using defaultDb to fill json with example(dev)
+//In case of issues with json file, using defaultDb to fill json with example(dev purposes)
 const defaultDb = [
         {
             "title": "Test Title",
@@ -89,7 +89,7 @@ app.post('/api/notes', (req, res) => {
 
         //Return adjusted database as response in json format.
         console.info(response)
-        res.json(dataBase)   
+        res.status(201).json(dataBase)   
     }
     else {
         res.status(500).json('Error in posting note')
