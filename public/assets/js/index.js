@@ -31,7 +31,8 @@ const getNotes = () =>
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })
+  
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -40,7 +41,8 @@ const saveNote = (note) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
-  });
+  })
+
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
@@ -150,7 +152,7 @@ const renderNoteList = async (notes) => {
 
       liEl.append(delBtnEl);
     }
-
+    console.log(liEl)
     return liEl;
   };
 
@@ -169,13 +171,11 @@ const renderNoteList = async (notes) => {
     noteListItems.forEach((note) => noteList[0].append(note));
     
   }
-  
 };
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
   getNotes().then(renderNoteList);
-
 }
 
 

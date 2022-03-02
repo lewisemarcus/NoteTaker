@@ -13,7 +13,8 @@
   "dependencies": {
     "connect-livereload": "^0.6.1",
     "express": "^4.16.4",
-    "livereload": "^0.9.3"
+    "livereload": "^0.9.3",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

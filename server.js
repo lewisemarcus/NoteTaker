@@ -53,16 +53,12 @@ app.post('/api/notes', (req, res) => {
         }
 
         //Obatin existing notes.
-        fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        fs.readFile('./db/db.json', 'utf8', (err) => {
             if (err) console.error(err)
             else {
-
                 //Data refers to data in db.json, parsedNotes is an array-like object.
-                const parsedNotes = JSON.parse(data)
-
-                parsedNotes.push(newNote)
-
-                const notesString = JSON.stringify(parsedNotes, null, 4)
+                dataBase.push(newNote)
+                const notesString = JSON.stringify(dataBase, null, 4)
 
                 //Write string to a JSON file for usage in pulling data from get requests.
                 fs.writeFile(`./db/db.json`, notesString, (err) => {
@@ -87,14 +83,13 @@ app.post('/api/notes', (req, res) => {
             status: 'success',
             body: newNote
         }
-
         console.log(response)
-        res.status(201).json(response)
+        res.json(dataBase)   
     }
     else {
         res.status(500).json('Error in posting note')
     }
-    
+
 })
 
 //Deletes each note.
@@ -127,17 +122,14 @@ app.delete('/api/notes/:id', (req, res) => {
     
 })
 
-app.get('/api/notes', (req, res) => {
-    res.json(dataBase);
-})
-
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'))
 })
 
+app.get('/api/notes', (req, res) => res.json(dataBase))
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
 app.listen(PORT, () => {
