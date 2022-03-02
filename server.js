@@ -58,8 +58,7 @@ app.post('/api/notes', (req, res) => {
         //Obatin existing notes.
         fs.readFile('./db/db.json', 'utf8', (err) => {
 
-            if (err) console.error(err)
-            
+            if (err) console.error(err)  
             else {
                 dataBase.push(newNote)
                 const notesString = JSON.stringify(dataBase, null, 4)
@@ -77,7 +76,7 @@ app.post('/api/notes', (req, res) => {
                     `)
                         console.error(err)
                     }
-                    else console.log(`Note ${newNote.title} has been written to JSON file`)
+                    else console.info(`Note ${newNote.title} has been written to JSON file`)
                 })
             }
         })
@@ -89,27 +88,26 @@ app.post('/api/notes', (req, res) => {
         }
 
         //Return adjusted database as response in json format.
-        console.log(response)
+        console.info(response)
         res.json(dataBase)   
     }
     else {
         res.status(500).json('Error in posting note')
     }
-
 })
 
 //Deletes each note.
 app.delete('/api/notes/:id', (req, res) => {
     let id = req.params.id
-    console.log(`this is clicked note's id: ${id}`)
+    console.info(`this is clicked note's id: ${id} to delete`)
     for (let each of dataBase) {
         if (each.id == id) dataBase.splice(dataBase.indexOf(each), 1)
         if (each.id == id && dataBase.indexOf(each) == 0) {
             dataBase.splice(dataBase.indexOf(each))
-            fs.writeFile(`./db/db.json`, JSON.stringify(defaultDb), (err) => console.error(err))
+            fs.writeFile(`./db/db.json`, JSON.stringify(defaultDb), (err) => err ? console.error(err) : console.info(`database updated.`))
         }
     }
-    
+
     //Write string to a JSON file for usage in pulling data from get requests.
     fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => {
         if (err) {
@@ -120,14 +118,13 @@ app.delete('/api/notes/:id', (req, res) => {
                 "id":"test id"
             }
         ]
-        `, (err) => console.error(err))
+        `, (err) => err ? console.error(err) : console.info(`database updated.`))
         }
 
     })
 
     //Return adjusted database as response in json format.
-    res.json(dataBase)
-    
+    res.json(dataBase) 
 })
 
 app.get('/notes', (req, res) => {
