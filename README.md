@@ -1,130 +1,88 @@
-# 11 Express.js: Note Taker
+#  Note Taker
 
-## Your Task
+  ![License: MIT ](https://img.shields.io/badge/License-MIT-informational)
 
-Your assignment is to modify starter code to create an application called Note Taker that can be used to write and save notes. This application will use an Express.js back end and will save and retrieve note data from a JSON file.
+  ## Description
 
-The application’s front end has already been created. It's your job to build the back end, connect the two, and then deploy the entire application to Heroku.
+  ```md
 
-
-## User Story
-
-```
-AS A small business owner
-I WANT to be able to write and save notes
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
-```
-
-
-## Acceptance Criteria
-
-```
 GIVEN a note-taking application
-WHEN I open the Note Taker
-THEN I am presented with a landing page with a link to a notes page
-WHEN I click on the link to the notes page
-THEN I am presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column
-WHEN I enter a new note title and the note’s text
+WHEN a user opens the Note Taker
+THEN a user is presented with a landing page with a link to a notes page
+WHEN a user clicks on the link to the notes page
+THEN a user is presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the noteâ€™s text in the right-hand column
+WHEN a user enters a new note title and the noteâ€™s text
 THEN a Save icon appears in the navigation at the top of the page
-WHEN I click on the Save icon
-THEN the new note I have entered is saved and appears in the left-hand column with the other existing notes
-WHEN I click on an existing note in the list in the left-hand column
+WHEN a user clicks on the Save icon
+THEN the new note the user has entered is saved and appears in the left-hand column with the other existing notes
+WHEN a user clicks on an existing note in the list in the left-hand column
 THEN that note appears in the right-hand column
-WHEN I click on the Write icon in the navigation at the top of the page
-THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
+WHEN a user clicks on the Write icon in the navigation at the top of the page
+THEN the user is presented with empty fields to enter a new note title and the noteâ€™s text in the right-hand column
+
 ```
 
+  ## Table of Contents
 
-## Mock-Up
+  - [Installation](#installation)
 
-The following images show the web application's appearance and functionality:
+  - [Walkthrough](#walkthrough)
 
-![Existing notes are listed in the left-hand column with empty fields on the right-hand side for the new note’s title and text.](./Assets/11-express-homework-demo-01.png)
+  - [Usage](#usage)
 
-![Note titled “Balance accounts” reads, “Balance account books by end of day Monday,” with other notes listed on the left.](./Assets/11-express-homework-demo-02.png)
+  - [Author(s)](#authors)
 
+  - [Contributing](#contributing)
 
-## Getting Started
+  - [License](#license)
 
-On the back end, the application should include a `db.json` file that will be used to store and retrieve notes using the `fs` module.
+  - [Questions](#questions)
 
-The following HTML routes should be created:
+  ## Installation
 
-* `GET /notes` should return the `notes.html` file.
+  Use the package manager [npm] to install express,livereload, connect-livereload, nodemon.
+```bash
 
-* `GET *` should return the `index.html` file.
+npm install express
+npm install livereload
+npm install  connect-livereload
+npm install  nodemon
 
-The following API routes should be created:
+# To run:
+node server.js
 
-* `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
+```
 
-* `POST /api/notes` should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. You'll need to find a way to give each note a unique id when it's saved (look into npm packages that could do this for you).
+  ## Walkthrough
 
+  N/A
+  ## Usage
+  
+N/A
 
-## Bonus
+  ## Author(s)
 
-You haven’t learned how to handle DELETE requests, but this application offers that functionality on the front end. As a bonus, try to add the DELETE route to the application using the following guideline:
-
-* `DELETE /api/notes/:id` should receive a query parameter that contains the id of a note to delete. To delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
-
-
-## Grading Requirements
-
-This homework is graded based on the following criteria: 
-
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the preceding acceptance criteria plus the following:
-
-  * Application front end must connect to an Express.js back end.
-
-  * Application back end must store notes that have a unique id in a JSON file.
-
-  * Application must be deployed to Heroku.
+  - [lewisemarcus](https://github.com/lewisemarcus)
 
 
-### Deployment: 36%
+  
+## Tests
+  
+N/A
 
-* Application deployed at live URL.
+  ## Contributing
+ 
+  Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-* Application loads with no errors.
+  
+## License
 
-* Application GitHub URL submitted.
+  Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
 
-* GitHub repository contains application code.
+  For more information on the License, please visit:  https://opensource.org/licenses/mit
 
-
-### Application Quality: 11%
-
-* Application console is free of errors.
-
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains quality README file with description, screenshot, and link to deployed application.
-
-
-### Bonus: +10 Points
-
-* Application allows users to delete notes.
-
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository, with a unique name and a README describing the project.
-
-- - -
-© 2022 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+  ## Questions
+  
+- [Marcus Lewis](https://github.com/lewisemarcus) - Lead Author's GitHub Link
+  
+- If you would like to email me for further questions, please send one to: <lewisemarcus@gmail.com>
