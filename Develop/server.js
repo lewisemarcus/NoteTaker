@@ -5,12 +5,13 @@ const crypto = require("crypto")
 const fs = require('fs')
 const livereload = require('livereload')
 const connectLiveReload = require("connect-livereload")
+const { data } = require('uikit')
 
 const liveReloadServer = livereload.createServer()
 liveReloadServer.server.once('connection', (err) => {
     setTimeout(() => {
         liveReloadServer.refresh('/notes')
-    }, 100)
+    }, 1)
 })
 
 const PORT = process.env.port || 3001
@@ -62,13 +63,14 @@ app.post('/api/notes', (req, res) => {
                         fs.writeFile(`./db/db.json`, `[
                         {
                             "title":"Test Title",
-                            "text":"Test text"
+                            "text":"Test text",
+                            "id":"test id"
                         }
                     ]
                     `)
                     console.error(err)
                     }
-                    else console.log(`Review for ${newNote.title} has been written to JSON file`)
+                    else console.log(`Object for ${newNote.title} has been written to JSON file`)
                 })
             }
         })
@@ -94,9 +96,14 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'))
 })
 
+//Deletes each note.
 app.delete('/api/notes/:id', (req, res) => {
-    const { id } = req.params
-    res.json(dataBase);
+    let id = req.params.id
+    console.log(`this is clicked note's id: ${id}`)
+    for(let each of dataBase) {
+        if(each.id == id) dataBase.splice(dataBase.indexOf(each))
+    }
+    res.json(dataBase)
 })
 
 app.get('*', (req, res) => {
