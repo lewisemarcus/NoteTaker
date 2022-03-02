@@ -22,6 +22,8 @@ THEN the user is presented with empty fields to enter a new note title and the n
 
 ```
 
+[Deployed Application (hosted on Heroku)](https://secure-fortress-62772.herokuapp.com/)
+
   ## Table of Contents
 
   - [Installation](#installation)
@@ -40,6 +42,8 @@ THEN the user is presented with empty fields to enter a new note title and the n
 
   ## Installation
 
+  For dev purposes, after cloning repository:
+
   Use the package manager [npm] to install express,livereload, connect-livereload, nodemon.
 ```bash
 
@@ -48,8 +52,8 @@ npm install livereload
 npm install  connect-livereload
 npm install  nodemon
 
-# To run:
-node server.js
+# To run (for dev purposes):
+nodemon server.js
 
 ```
 
