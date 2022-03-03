@@ -65,9 +65,9 @@ app.post('/api/notes', (req, res) => {
             body: newNote
         }
 
-        //Return adjusted database as response in json format.
+        //Return new note and 'success' as response in json format.
         console.info(response)
-        res.status(201).json(dataBase)   
+        res.status(201).json(response)   
     }
     else {
         res.status(500).json('Error in posting note')
@@ -77,19 +77,28 @@ app.post('/api/notes', (req, res) => {
 //Deletes each note.
 app.delete('/api/notes/:id', (req, res) => {
     let id = req.params.id
-
+    let note
     //Log id and Log that a DELETE request was received
     console.info(`${req.method} request received to delete a note with id: ${id}`)
     
     for (let each of dataBase) {
-        if (each.id == id) dataBase.splice(dataBase.indexOf(each), 1)
+        if (each.id == id) {
+            dataBase.splice(dataBase.indexOf(each), 1)
+            note = each
+        }
     }
 
     //Write string to a JSON file for usage in pulling data from get requests.
     fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => err ? console.error(err) : console.info('database updated'))
 
-    //Return adjusted database as response in json format.
-    res.json(dataBase) 
+    const response = {
+        status: 'delete success',
+        body: note
+    }
+
+    //Return 'delete success' status and deleted note as response in json format.
+    console.info(response)
+    res.status(201).json(response) 
 })
 
 app.get('/notes', (req, res) => {
