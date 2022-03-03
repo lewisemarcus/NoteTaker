@@ -14,15 +14,6 @@ liveReloadServer.server.once('connection', (err) => {
     }, 10)
 })
 
-//In case of issues with json file, using defaultDb to fill json with example(dev purposes)
-const defaultDb = [
-        {
-            "title": "Test Title",
-            "text": "Test text",
-            "id": "test id"
-        }
-    ]
-
 const PORT = process.env.PORT || 3001
 
 const app = express()
@@ -64,20 +55,7 @@ app.post('/api/notes', (req, res) => {
                 const notesString = JSON.stringify(dataBase, null, 4)
 
                 //Write string to a JSON file for usage in pulling data from get requests.
-                fs.writeFile(`./db/db.json`, notesString, (err) => {
-                    if (err) {
-                        fs.writeFile(`./db/db.json`, `[
-                        {
-                            "title":"Test Title",
-                            "text":"Test text",
-                            "id":"test id"
-                        }
-                    ]
-                    `)
-                        console.error(err)
-                    }
-                    else console.info(`Note ${newNote.title} has been written to JSON file`)
-                })
+                fs.writeFile(`./db/db.json`, notesString, (err) => err ? console.error(err) : console.info(`Note ${newNote.title} has been written to JSON file`))
             }
         })
 
@@ -99,29 +77,16 @@ app.post('/api/notes', (req, res) => {
 //Deletes each note.
 app.delete('/api/notes/:id', (req, res) => {
     let id = req.params.id
-    console.info(`this is clicked note's id: ${id} to delete`)
+
+    //Log id and Log that a DELETE request was received
+    console.info(`${req.method} request received to delete a note with id: ${id}`)
+    
     for (let each of dataBase) {
         if (each.id == id) dataBase.splice(dataBase.indexOf(each), 1)
-        if (each.id == id && dataBase.indexOf(each) == 0) {
-            dataBase.splice(dataBase.indexOf(each))
-            fs.writeFile(`./db/db.json`, JSON.stringify(defaultDb), (err) => err ? console.error(err) : console.info(`database updated.`))
-        }
     }
 
     //Write string to a JSON file for usage in pulling data from get requests.
-    fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => {
-        if (err) {
-            fs.writeFile(`./db/db.json`, `[
-            {
-                "title":"Test Title",
-                "text":"Test text",
-                "id":"test id"
-            }
-        ]
-        `, (err) => err ? console.error(err) : console.info(`database updated.`))
-        }
-
-    })
+    fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => err ? console.error(err) : console.info('database updated'))
 
     //Return adjusted database as response in json format.
     res.json(dataBase) 
