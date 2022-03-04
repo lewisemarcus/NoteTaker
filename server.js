@@ -6,12 +6,6 @@ const fs = require('fs')
 const livereload = require('livereload')
 const connectLiveReload = require("connect-livereload")
 
-const test =     [{
-    "title": "weqweqwe",
-    "text": "qweqweq",
-    "id": "28d7103fb167e012bf96bbe30777d09c"
-}]
-
 //Setup for server refresh(dev)
 const liveReloadServer = livereload.createServer()
 liveReloadServer.server.once('connection', (err) => {
@@ -54,7 +48,6 @@ app.post('/api/notes', (req, res) => {
 
         //Obatin existing notes.
         fs.readFile('./db/db.json', 'utf8', (err) => {
-
             if (err) console.error(err)  
             else {
                 dataBase.push(newNote)
