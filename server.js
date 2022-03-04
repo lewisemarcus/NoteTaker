@@ -36,7 +36,7 @@ app.post('/api/notes', (req, res) => {
 
         //Obatin existing notes.
         fs.readFile('./db/db.json', 'utf8', (err) => {
-            if (err) console.error(err)  
+            if (err) console.error(err)
             else {
                 dataBase.push(newNote)
                 const notesString = JSON.stringify(dataBase, null, 4)
@@ -54,7 +54,7 @@ app.post('/api/notes', (req, res) => {
 
         //Return new note and 'success' as response in json format.
         console.info(response)
-        res.status(201).json(response)   
+        res.status(201).json(response)
     }
     else {
         res.status(500).json('Error in posting note')
@@ -67,25 +67,26 @@ app.delete('/api/notes/:id', (req, res) => {
     let note
     //Log id and Log that a DELETE request was received
     console.info(`${req.method} request received to delete a note with id: ${id}`)
-    
+
     for (let each of dataBase) {
         if (each.id == id) {
             dataBase.splice(dataBase.indexOf(each), 1)
             note = each
+
+            //Write string to a JSON file for usage in pulling data from get requests.
+            fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => err ? console.error(err) : console.info('database updated'))
+
+            const response = {
+                status: 'delete success',
+                body: note
+            }
+
+            //Return 'delete success' status and deleted note as response in json format.
+            console.info(response)
+            res.status(201).json(response)
         }
+        else res.status(500).json('Error in deleting note')
     }
-
-    //Write string to a JSON file for usage in pulling data from get requests.
-    fs.writeFile(`./db/db.json`, JSON.stringify(dataBase, null, 4), (err) => err ? console.error(err) : console.info('database updated'))
-
-    const response = {
-        status: 'delete success',
-        body: note
-    }
-
-    //Return 'delete success' status and deleted note as response in json format.
-    console.info(response)
-    res.status(201).json(response) 
 })
 
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html')))
