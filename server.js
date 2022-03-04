@@ -3,22 +3,10 @@ const path = require('path')
 const dataBase = require('./db/db.json')
 const crypto = require("crypto")
 const fs = require('fs')
-const livereload = require('livereload')
-const connectLiveReload = require("connect-livereload")
-
-//Setup for server refresh(dev)
-const liveReloadServer = livereload.createServer()
-liveReloadServer.server.once('connection', (err) => {
-    setTimeout(() => {
-        liveReloadServer.refresh('/notes')
-    }, 10)
-})
 
 const PORT = process.env.PORT || 3001
 
 const app = express()
-
-app.use(connectLiveReload())
 
 //Setup app to handle data parsing in json format.
 app.use(express.urlencoded({ extended: true }))
