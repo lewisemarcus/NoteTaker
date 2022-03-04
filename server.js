@@ -6,6 +6,12 @@ const fs = require('fs')
 const livereload = require('livereload')
 const connectLiveReload = require("connect-livereload")
 
+const test =     [{
+    "title": "weqweqwe",
+    "text": "qweqweq",
+    "id": "28d7103fb167e012bf96bbe30777d09c"
+}]
+
 //Setup for server refresh(dev)
 const liveReloadServer = livereload.createServer()
 liveReloadServer.server.once('connection', (err) => {
@@ -103,7 +109,7 @@ app.delete('/api/notes/:id', (req, res) => {
 
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html')))
 
-app.get('/api/notes', (req, res) => res.json(dataBase))
+app.get('/api/notes', (req, res) => res.status(201).json(dataBase))
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')))
 
