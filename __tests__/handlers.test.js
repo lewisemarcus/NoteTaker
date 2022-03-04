@@ -6,10 +6,12 @@ const app = require('../app')
 
 describe('GET *', () => {
     describe('Test the root path.', () => {
-        test('It should respond with same home page URL.', () => {
+        test(`The 'home' handler from 'handlers.js' should be called.`, () => {
             const req = {}, res = { sendFile: jest.fn() }
+            const mock = jest.spyOn(handlers, 'home').mockImplementation(() => {})
             handlers.home(req, res)
-            expect(res.sendFile.mock.calls[0][0]).toBe(path.join('C:/Users/lmarc/Desktop/Homework/NoteTaker/public/index.html'))
+            expect(mock).toHaveBeenCalled()
+            mock.mockRestore()
         })
     })
 })
@@ -40,7 +42,6 @@ describe('POST /api/notes', () => {
                 text: 'test text',
                 title: 'test title'
             })
-            console.log(response)
             expect(response.statusCode).toBe(201)
         })
         test('It should specify json in the content type header', async () => {
