@@ -42,7 +42,7 @@ exports.noteDelete = (req, res) => {
     }
 }
 
-exports.notePost = (req, res) => {
+exports.notePost = async (req, res) => {
 
     // Log that a POST request was received
     console.info(`${req.method} request received to add a note`)
@@ -63,7 +63,8 @@ exports.notePost = (req, res) => {
 
         //Obatin existing notes.
         fs.readFile('./db/db.json', 'utf8', (err) => {
-            if (err) console.error(err)
+            if (err)
+                console.error(err)
             else {
                 dataBase.push(newNote)
                 const notesString = JSON.stringify(dataBase, null, 4)
@@ -81,7 +82,7 @@ exports.notePost = (req, res) => {
 
         //Return new note and 'success' as response in json format.
         console.info(response)
-        res.status(201).json(response)
+        await res.status(201).json(response)
     }
     else {
         res.status(500).json('Error in posting note')

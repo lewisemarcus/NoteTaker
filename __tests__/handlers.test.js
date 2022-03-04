@@ -1,18 +1,54 @@
 const handlers = require('../handlers')
+const supertest = require('supertest')
 const path = require('path')
+const { request } = require('http')
+const app = require('../app')
 
-describe('Test the root path.', () => {
-    test('It should respond with the GET method.', () => {
-        const req = {}, res = { sendFile: jest.fn() }
-        handlers.home(req, res)
-        expect(res.sendFile.mock.calls[0][0]).toBe(path.join('C:/Users/lmarc/Desktop/Homework/NoteTaker/public/index.html'))
+describe('GET *', () => {
+    describe('Test the root path.', () => {
+        test('It should respond with same home page URL.', () => {
+            const req = {}, res = { sendFile: jest.fn() }
+            handlers.home(req, res)
+            expect(res.sendFile.mock.calls[0][0]).toBe(path.join('C:/Users/lmarc/Desktop/Homework/NoteTaker/public/index.html'))
+        })
     })
 })
 
-// describe('Test note POST method.', () => {
-//     test('It should respond with a successful post.', () => {
-//         const req = {"title":"test title","text":"test text"}, res = { json: jest.fn() }
-//         handlers.notePost(req, res)
-//         expect(res.status.mock.calls).toBe('201')
-//     })
-// })
+describe('POST /api/notes', () => {
+    describe('Given a user enters a new note.', () => {
+        test('It should respond with a successful POST method.', async () => {
+            const response = await supertest(app).post('/api/notes').send({
+                text: 'test text',
+                title: 'test title'
+            })
+            expect(response.req.method).toBe('POST')
+        })
+        test('It should save the entered note to the db.json file and respond with a success note containing the note added and id of length 32.', async () => {
+            const response = await supertest(app).post('/api/notes').send({
+                text: 'test text',
+                title: 'test title'
+            })
+            textJson = JSON.parse(response.text)
+            expect(textJson.status).toBe('success')
+            expect(textJson.body.title).toBe('test title')
+            expect(textJson.body.text).toBe('test text')
+            expect(textJson.body.id).toEqual(expect.any(String))
+            expect(textJson.body.id.length).toEqual(32)
+        })
+        test('It should respond with a status code 201 and contain a report the status and note.', async () => {
+            const response = await supertest(app).post('/api/notes').send({
+                text: 'test text',
+                title: 'test title'
+            })
+            console.log(response)
+            expect(response.statusCode).toBe(201)
+        })
+        test('It should specify json in the content type header', async () => {
+            const response = await supertest(app).post('/api/notes').send({
+                text: 'test text',
+                title: 'test title'
+            })
+            expect(response.type).toBe(`application/json`)
+         })
+    })
+})
