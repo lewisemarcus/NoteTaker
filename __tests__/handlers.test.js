@@ -1,4 +1,4 @@
-const handlers = require('../handlers')
+const handlers = require('../handlers/handlers')
 const supertest = require('supertest')
 const path = require('path')
 const { request } = require('http')

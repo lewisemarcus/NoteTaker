@@ -1,13 +1,16 @@
 const fs = require('fs')
 const path = require('path')
-const dataBase = require('./db/db.json')
+const dataBase = require('../db/db.json')
 const crypto = require("crypto")
 
 const PORT = process.env.PORT || 3001
 
 exports.PORT = PORT
 
-exports.home = (req, res) => res.sendFile(path.join(__dirname, 'public/index.html'))
+exports.home = (req, res) => {
+    console.log(__dirname)
+    res.sendFile(path.join(__dirname, 'public/index.html'))
+}
 
 exports.notes = (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html'))
 

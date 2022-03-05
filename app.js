@@ -1,8 +1,10 @@
 const express = require('express')
 
 const app = express()
+const notesRouter = require('./routes/notes')
+const indexRouter = require('./routes/index')
 
-const { home, notes, noteGet, notePost, noteDelete } = require('./handlers')
+const { noteGet, notePost, noteDelete } = require('./handlers/handlers')
 
 //Setup app to handle data parsing in json format.
 app.use(express.urlencoded({ extended: true }))
@@ -16,10 +18,9 @@ app.post('/api/notes', notePost)
 //Deletes each note.
 app.delete('/api/notes/:id', noteDelete)
 
-app.get('/notes', notes)
-
 app.get('/api/notes', noteGet)
 
-app.get('*', home)
+app.use('/notes', notesRouter)
+app.use('*', indexRouter)
 
 module.exports = app
