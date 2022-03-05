@@ -10,15 +10,15 @@ GIVEN a note-taking application
 WHEN a user opens the Note Taker
 THEN a user is presented with a landing page with a link to a notes page
 WHEN a user clicks on the link to the notes page
-THEN a user is presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the noteâ€™s text in the right-hand column
-WHEN a user enters a new note title and the noteâ€™s text
+THEN a user is presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note's text in the right-hand column
+WHEN a user enters a new note title and the note's text
 THEN a Save icon appears in the navigation at the top of the page
 WHEN a user clicks on the Save icon
 THEN the new note the user has entered is saved and appears in the left-hand column with the other existing notes
 WHEN a user clicks on an existing note in the list in the left-hand column
 THEN that note appears in the right-hand column
 WHEN a user clicks on the Write icon in the navigation at the top of the page
-THEN the user is presented with empty fields to enter a new note title and the noteâ€™s text in the right-hand column
+THEN the user is presented with empty fields to enter a new note title and the note's text in the right-hand column
 
 ```
 
@@ -44,13 +44,17 @@ THEN the user is presented with empty fields to enter a new note title and the n
 
   For dev purposes, after cloning repository:
 
-  Use the package manager [npm] to install express,livereload, connect-livereload, nodemon.
+  Use the package manager [npm] to install express,livereload,connect-livereload,nodemon,jest,supertest.
 ```bash
 
 npm install express
 npm install livereload
-npm install  connect-livereload
-npm install  nodemon
+npm install connect-livereload
+npm install nodemon
+
+#for tests: 
+npm install jest
+npm install supertest
 
 # To run (for dev purposes):
 nodemon server.js
@@ -72,7 +76,9 @@ N/A
   
 ## Tests
   
-N/A
+```bash
+npm test
+```
 
   ## Contributing
  
