@@ -152,7 +152,6 @@ const renderNoteList = async (notes) => {
 
       liEl.append(delBtnEl);
     }
-    console.log(liEl)
     return liEl;
   };
 
