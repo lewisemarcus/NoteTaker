@@ -7,15 +7,9 @@ const PORT = process.env.PORT || 3001
 
 exports.PORT = PORT
 
-exports.home = (req, res) => {
-    console.log(__dirname)
-    res.sendFile(path.join(__dirname, 'public/index.html'))
-}
+exports.home = (req, res) => res.sendFile(path.join(__dirname, 'public/index.html'))
 
-exports.notes = (req, res) => {
-    console.log(__dirname)
-    res.sendFile(path.join(__dirname, 'public/notes.html'))
-}
+exports.notes = (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html'))
 
 exports.noteGet = (req, res) => res.status(201).json(dataBase)
 
