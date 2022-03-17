@@ -22,6 +22,10 @@ THEN the user is presented with empty fields to enter a new note title and the n
 
 ```
 
+![Photo of home page](Assets/NoteTaker.png)
+
+![Photo of note page](Assets/NoteTake2.png)
+
 [Deployed Application (hosted on Heroku)](https://secure-fortress-62772.herokuapp.com/)
 
   ## Table of Contents
