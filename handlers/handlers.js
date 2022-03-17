@@ -3,6 +3,7 @@ const path = require('path')
 const dataBase = require('../db/db.json')
 const crypto = require("crypto")
 
+
 const PORT = process.env.PORT || 3001
 
 exports.PORT = PORT
@@ -16,13 +17,23 @@ exports.noteGet = (req, res) => res.status(201).json(dataBase)
 exports.server = () => console.log(`Example app listening at http://localhost:${PORT}`)
 
 exports.noteDelete = (req, res) => {
-    let id = req.params.id
     let note
+    const idDatabase = []
     //Log id and Log that a DELETE request was received
-    console.info(`${req.method} request received to delete a note with id: ${id}`)
-
+    console.info(`${req.method} request received to delete a note with id: ${req.params.id}`)
+    for(let each of dataBase) {
+        idDatabase.push(each.id)
+    }
     for (let each of dataBase) {
-        if (each.id == id) {
+
+        if(idDatabase.indexOf(req.params.id) == -1) {
+            const response = {
+                status: 'delete error',
+                body: note
+            }
+            res.status(500).json(response)
+        }
+        else if (each.id == req.params.id) {
             dataBase.splice(dataBase.indexOf(each), 1)
             note = each
 
@@ -38,7 +49,6 @@ exports.noteDelete = (req, res) => {
             console.info(response)
             res.status(201).json(response)
         }
-        else res.status(500).json('Error in deleting note')
     }
 }
 

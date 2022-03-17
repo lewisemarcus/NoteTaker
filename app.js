@@ -1,6 +1,7 @@
 const express = require('express')
 
 const app = express()
+
 const notesRouter = require('./routes/notes')
 const indexRouter = require('./routes/index')
 const apiRouter = require('./routes/notesAPI')
